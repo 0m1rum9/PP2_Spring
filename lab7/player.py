@@ -11,7 +11,8 @@ os.chdir(music_directory)
 
 music_files = [file for file in os.listdir() if file.endswith(".mp3")]
 
-current_track = 1
+current_track = 0
+current_track = (current_track + 1) % len(music_files)
 paused = False
 
 pygame.mixer.music.load(music_files[current_track])
@@ -24,11 +25,13 @@ kaif = pygame.transform.scale(kaif, (200, 200))
 
 running = True
 while running:
+    # pygame.mixer.music.load(music_files[current_track])
+    # pygame.mixer.music.play()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_1:
+            if event.key == pygame.K_SPACE:
                 if paused:
                     pygame.mixer.music.unpause()
                     paused = False

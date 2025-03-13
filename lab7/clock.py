@@ -7,22 +7,23 @@ screen = pygame.display.set_mode((800, 800))
 pygame.display.set_caption('Clock')
 clock = pygame.time.Clock()
 FPS = 1
-done = False
+running = True
+
 myClock = pygame.image.load('mainclock.png')
 myClock = pygame.transform.scale(myClock, (600, 600))
 
-
-
-minute_arrow = pygame.image.load('rightarm.png') # 30:257
+minute_arrow = pygame.image.load('rightarm.png')
 minute_arrow = pygame.transform.scale(minute_arrow, (800, 700))
 second_arrow = pygame.image.load('leftarm.png')
 second_arrow = pygame.transform.scale(second_arrow, (40, 500))
 
-
-while not done:
+counter = 0
+while running:
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                        done = True
+                        running = False
+        keys = pygame.key.get_pressed()
+
         my_time = datetime.datetime.now()
         hourINT = int(my_time.strftime("%I"))
         minuteINT = int(my_time.strftime("%M"))
@@ -35,13 +36,12 @@ while not done:
         minute = pygame.transform.rotate(minute_arrow, angleMINUTE)
         second = pygame.transform.rotate(second_arrow, angleSECOND)
         
-
+        
         screen.fill((255, 255, 255))
         screen.blit(myClock, (100, 100))
         screen.blit(second, (399 - int(second.get_width() / 2), 400 - int(second.get_height() / 2))) 
         screen.blit(minute, ((399 - int(minute.get_width() / 2), 400 - int(minute.get_height() / 2))))
         pygame.draw.circle(screen, (0, 0, 0), (400, 400), 22)
         pygame.display.flip()
-        clock.tick(FPS)
-        # time.sleep(1)
+        clock.tick(60)
 pygame.quit()
